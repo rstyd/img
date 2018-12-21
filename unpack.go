@@ -48,6 +48,9 @@ func (cmd *unpackCommand) Run(ctx context.Context, args []string) (err error) {
 			return fmt.Errorf("getting current working directory failed: %v", err)
 		}
 		cmd.output = filepath.Join(wd, "rootfs")
+	} else if len(cmd.output) > 1 && cmd.output[0] != '/' {
+		wd, err := os.Getwd();
+		cmd.output = filepath.Join(wd, cmd.output);
 	}
 
 	// Create the context.
